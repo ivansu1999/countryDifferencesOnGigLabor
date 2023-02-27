@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>UK Platform Workers</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
+    <style>
+        h2, h3 {
+            margin: 10px;
+            font-size: 18px;
+        }
+        h3 {
+            font-size: 16px;
+        }
+        p {
+            margin: 10px;
+        }
+        body { 
+            margin: 0; 
+            padding: 0; 
+        }
+        #map { 
+            position: absolute; 
+            top: 0; 
+            bottom: 0; 
+            width: 100%; 
+        }
+        .map-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: rgb(204, 118, 97);
+            border-style: solid;
+            border-width: 1px;
+            border-color: rgb(72, 12, 5);
+            margin-left: 20px;
+            font-family: 'Times New Roman', serif;
+            overflow: auto;
+            border-radius:10px;
+        }
+        #title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-top: 20px;
+            margin-left: 20px;
+            font-family: 'Times New Roman', sans-serif;
+            font-size: 25pt;
+            color: black
+        }
+        #subtitle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-top: 70px;
+            margin-left: 190px;
+            font-family: 'Times New Roman', sans-serif;
+            font-size: 15pt;
+            color: black
+        }
+        #features {
+            top: 0;
+            height: 100px;
+            margin-top: 20px;
+            width: 250px;
+        }
+        #legend {
+            padding: 10px;
+            box-shadow: 0 1px 2px rgba(172, 42, 42, 0.1);
+            line-height: 18px;
+            height: 210px;
+            margin-bottom: 40px;
+            width: 150px;
+            background: #fff
+        }
+
+        .legend-key {
+            display: inline-block;
+            border-radius: 20%;
+            width: 10px;
+            height: 10px;
+            margin-right: 5px;
+        }
+
+        a {
+            color: black;
+        }
+
+        .mapboxgl-canvas-container.mapboxgl-interactive,
+        .mapboxgl-ctrl-group button.mapboxgl-ctrl-compass {
+            cursor: unset;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="title">
+        Platform Workers in the UK
+    </div>
+    <div id="subtitle">
+        Click on a region!
+    </div>
+    <div class='map-overlay' id='legend'></div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoibnlhZGF2OCIsImEiOiJjbGRtOWJoNXQwMWxmM29vNGtjYm82bWg0In0.YJeqlAttyH5UPgOCIsnGxQ';
+
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/light-v10', // style URL
+            zoom: 5, // starting zoom
+            center: [-3.4360, 55.3781] // starting center: UK
+        
+        });
+
+        async function geojsonFetch() { 
+            let response = await fetch('assets/ukplatformworkers.geojson');
+            let worker_data = await response.json();
+
+            map.on('load', function loadingData() {
+                map.addSource('worker_data', {
+                    type: 'geojson',
+                    data: worker_data
+                });
+
+                map.addLayer({
+                    'id': 'worker-percents',
+                    'type': 'fill',
+                    'source': 'worker_data',
+                    'paint': {
+                        'fill-color': [
+                            'step',
+                            ['get', 'percent'],
+                            '#FFEDA0',   // stop_output_0
+                            5,          // stop_input_0
+                            '#FED976',   // stop_output_1
+                            10,          // stop_input_1
+                            '#FEB24C',   // stop_output_2
+                            15,          // stop_input_2
+                            '#FD8D3C',   // stop_output_3
+                            20,         // stop_input_3
+                            '#FC4E2A'   // stop_output_4
+
+
+                        ],
+                        'fill-outline-color': '#BBBBBB',
+                        'fill-opacity': 0.7,
+                    }
+                });
+
+                map.on('click', 'worker-percents', (event) => {
+                    new mapboxgl.Popup()
+                        .setLngLat(event.features[0].geometry.coordinates)
+                        .setHTML(`<strong>Percent:</strong> ${event.features[0].properties.percent}`)
+                        .addTo(map);
+                });
+
+
+            });
+
+            const layers = [
+                '0-4%',
+                '5-9%',
+                '10-14%',
+                '15-20%',
+                '20% and more'
+            ];
+
+            const colors = [
+                '#FFEDA070',
+                '#FED97670',
+                '#FEB24C70',
+                '#FD8D3C70',
+                '#FC4E2A70',
+            ];
+
+            const legend = document.getElementById('legend');
+            legend.innerHTML = "<b>Percent of Platform Workers by Region</b>";
+
+            layers.forEach((layer, i) => {
+                const color = colors[i];
+                const item = document.createElement('div');
+                const key = document.createElement('span');
+                key.className = 'legend-key';
+                key.style.backgroundColor = color;
+
+                const value = document.createElement('span');
+                value.innerHTML = layer;
+                item.appendChild(key);
+                item.appendChild(value);
+                legend.appendChild(item);
+            });
+
+            const source = 
+                '<p style ="text-align: left; font-size:10pt">Source: <a href="https://feps-europe.eu/wp-content/uploads/downloads/publications/platform%20work%20in%20the%20uk%202016-2019%20v3-converted.pdf">Univ. of Hertfordshire</a></p>';
+            
+            legend.innerHTML += source;
+
+        }
+
+        geojsonFetch();
+
+    </script>
+
+</body>
+
+</html>
