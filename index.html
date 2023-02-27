@@ -1,10 +1,241 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
+  <meta charset="utf-8" />
+  <meta name="description" content="Global Gig Economy and Labor" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Global Gig Economy and Labor</title>
+  <!-- <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,500;1,400;1,500&display=swap" /> -->
+  <!-- <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css"> -->
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"> -->
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://unpkg.com/scrollama"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
 </head>
+
+
 <body>
+    <!-- loading a video cover page -->
+    <section id="cover">
+        <!-- loading a video as the background -->
+        <img class="fullscreen canvas-center" src="img/cover_page.jpg" alt="An Uber signage posted at LAX">
+        <div id="intro">
+        <h1>Global Gig Economy and Labor</h1>
+        <h5>An introduction to the global view of gig economy.</h5>
+        <p>This section shows where active research is happening, and on what topics to communicate on-going nature of
+            scientific learning. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
+            ligula
+            eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+            Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede
+            justo,
+            fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdet a, venenatis vitae, justo.
+            Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi.
+            Aenean
+            vulputate
+            eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante,
+            dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.
+            Aenean imperdiet.
+            Etiam
+            ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus,
+            tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc,
+            blandit
+            vel,
+            luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero
+            venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla
+            mauris sit
+            amet
+            nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc.</p>
+
+        <div class="footnote">
+            <span> A project by group AB1 of GEOG 458.</span>
+        </div>
+        </div>
+    </section>
+    <!-- a geonarrative will have two major components, a storyboard and a script panel of a series of scenes/actions -->
+    <section id="geonarrative">
+        <!-- a storymap can present differnt types of objects, like map, chart, diagram, etc. -->
+        <div id="storyboard">
+        <!-- create the place holder element for map -->
+            <div id="map"></div>
+        </div>
+
+        <article class="scene" data-scene="0">
+            <h2>Section: Introduction</h2>
+            <p></p>
+        </article>
+
+        <article class="scene" data-scene="1">
+            <h2>Section: UK</h2>
+            <p></p>
+        </article>
+
+        <article class="scene" data-scene="2">
+            <h2>Section: US</h2>
+            <p>This section shows where active research is happening, and on what topics to communicate on-going nature of
+                scientific learning. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                Aenean massa.
+                Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
+                ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla
+                vel, aliquet nec,
+                vulputate eget, arcu. In enim justo, rhoncus ut, imperdet a, venenatis vitae, justo. Nullam dictum felis eu pede
+                mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate.
+            </p>
+            <hr>
+            <div>
+                <!-- loading bootstrap icons -->
+                <p><i class="bi bi-person"></i> <span>2,823</span>
+                </p>
+                <p><i class="bi bi-map"></i> <span>3,520</span>
+                </p>
+            </div>
+        </article>
+
+        <article class="scene" data-scene="3">
+            <h2>Section: Seattle </h2>
+            <img src="img/doordash.jpg"></img>
+            <p></p>
+        </article>
+
+        <article class="scene fullscreen" data-scene="4">
+            <h2>STEP 7: Ending Page</h2>
+        </article>
+        
+    </section>
+
+    <section id="footer">
+        <h2>FOOTER</h2>
+    </section>
+
+    <script>
+        // 1. Declare the maps, script panels, and different thematic layers.
+        let map, scriptPanel = scrollama();
+
+        // 2. Intialize the layout.
+    
+        history.scrollRestoration = "manual"; // make sure the geo-narrative will be scrolled to the cover page even after a page refresh.
+        window.scrollTo(0, 0); // scroll the geo-narrative to the coverpage
+        adjustStoryboardlSize(); // force a browser window resize.
+        window.addEventListener("resize", adjustStoryboardlSize); // // ask the browser window listen to the resize event, thereby force a viewport resize whenever adjusting the window size.
+
+        // 3. Define Generic window resize listener event
+        function adjustStoryboardlSize() {
+
+        const scenes = document.getElementsByClassName("scene");
+        const storyboard = document.getElementById("storyboard");
+
+        // 3.1 determine the height of each scene element
+        let sceneH = Math.floor(window.innerHeight * 0.75);
+        for (const scene of scenes) {
+            scene.style.height = sceneH + "px";
+        }
+        
+        // 3.2 determin the height of the storyboard.
+        let storyboardHeight = window.innerHeight;
+        let storyboardMarginTop = (window.innerHeight - storyboardHeight) / 2;
+
+        storyboard.style.height = storyboardHeight + "px";
+        storyboard.style.top = storyboardMarginTop + "px"
+
+        // 3.3 tell scrollama/script panel to update new element dimensions
+        scriptPanel.resize();
+        }
+
+        // 4. Initialize the mapbox
+        mapboxgl.accessToken =
+        'pk.eyJ1IjoiY2F0aHlsdWMiLCJhIjoiY2xkcHFzNGJjMTVlNDNycXV1amVnZXp1dyJ9.hkogwR_3Hx8ivsTA8wa4Rw'; // Assign the access token
+    
+        map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/mapbox/light-v10',
+        zoom: 7, // starting zoom
+        minZoom: 3,
+        maxZoom: 10,
+        center: [-121.93, 47.33], // starting center
+        scrollZoom: false,
+        boxZoom: false,
+        doubleClickZoom: false
+        });  // Declare the map object
+
+        async function geojsonFetch() {
+
+            // 7. Trigger operations inside of the the ()=> {} funciton while loading the map.
+            map.on('load', () => {
+
+                // 9. Initialize the script panel
+                scriptPanel
+                    .setup({
+                    step: ".scene", // all the scenes.
+                    offset: 0.33, // the location of the enter and exit trigger
+                    debug: false // toggler on or off the debug mode.
+                    })
+                    .onStepEnter(handleSceneEnter)
+                    .onStepExit(handleSceneExit);
+                
+                // 10. This function performs when a scene enters the storyboard
+                function handleSceneEnter(response) {
+
+                    var index = response.index; // capture the id of the current scene. 
+
+                    if (index === 3) {
+
+                        map.flyTo({
+                        center: [-122.4121036, 47.6131229],
+                        zoom: 12,
+                        pitch: 0,
+                        speed: 0.5
+
+                        });
+                    } else if (index === 2) {
+                        map.flyTo({
+                        center: [-121.93, 47.33],
+                        zoom: 7,
+                        pitch: 0,
+                        speed: 0.5
+                    
+                        });
+                    } else if (index === 1) {
+                        map.flyTo({
+                        center: [-3.4360, 55.3781],
+                        zoom: 5,
+                        pitch: 0,
+                        speed: 0.5
+                    
+                        });
+                    } else if (index === 0) {
+                        map.flyTo({
+                        center: [-121.93, 47.33],
+                        zoom: 7,
+                        pitch: 0,
+                        speed: 0.5
+                    
+                        });
+                    }
+                    
+                }
+
+                // 11. This function performs when a scene exists the storyboard
+                function handleSceneExit(response) {
+                    var index = response.index;
+
+                    if (index === 0) {
+                    if (response.direction == 'down') { 
+                        document.getElementById("cover").style.visibility = "hidden"; // when you scroll down, the cover page will be hided.
+                    } else {
+                        document.getElementById("cover").style.visibility = "visible"; // when you scroll up, the cover page will be shown.
+                    }
+                    } 
+                }
+
+
+            });
+
+        };
+
+    // 5 call the data loading function.
+        geojsonFetch();
+    </script>
 
 </body>
 </html>
