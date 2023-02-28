@@ -154,11 +154,11 @@
 
                 map.on('click', 'worker-percents', (event) => {
                     new mapboxgl.Popup()
-                        .setLngLat(event.features[0].geometry.coordinates)
+                        .setLngLat(event.features[0].geometry.coordinates[0][0])
                         .setHTML(`<strong>Percent:</strong> ${event.features[0].properties.percent}`)
                         .addTo(map);
                 });
-
+            
 
             });
 
