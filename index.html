@@ -72,33 +72,61 @@
         </article>
 
         <article class="scene" data-scene="2">
-            <h2>Section: US</h2>
-            <p>This section shows where active research is happening, and on what topics to communicate on-going nature of
-                scientific learning. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                Aenean massa.
-                Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
-                ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla
-                vel, aliquet nec,
-                vulputate eget, arcu. In enim justo, rhoncus ut, imperdet a, venenatis vitae, justo. Nullam dictum felis eu pede
-                mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate.
+            <h2>The United States: Shift of Policy</h2>
+            <p>The US government has been jumping back and forth on policies related to 'gig' workers and contractors. 
+                Due to the growing popularity of companies such as Uber, Doordash, and Lyft in the United States over the 
+                past decade, legal battles have been heatedly fought over the classification standards of employees. 
             </p>
-            <hr>
-            <div>
-                <!-- loading bootstrap icons -->
-                <p><i class="bi bi-person"></i> <span>2,823</span>
-                </p>
-                <p><i class="bi bi-map"></i> <span>3,520</span>
-                </p>
-            </div>
+                <img src="img/doordash.jpg"></img>
         </article>
 
         <article class="scene" data-scene="3">
-            <h2>Section: Seattle </h2>
-            <img src="img/doordash.jpg"></img>
-            <p></p>
+            <h2>Policy of Each US Presidency</h2>
+            <p>
+                <b>Obama administration:</b>
+                <ul>
+                    <li>Employee misclassification cases were actively enforced, yet there were no new regulations to interpret employee status. </li>
+                    <li>
+                        In 2015, guidance was issued stating employment relationships should be measured more by workers' economic dependency on employers
+                        and less by the amount of control exerted over them. 
+                        <a href="https://www.reuters.com/world/us/us-government-back-forth-gig-workers-contractors-2022-10-11/">
+                            (D. Shepardson and N. Bose, Reuter)
+                        </a> 
+                    </li>
+                    <br><br>
+                </ul>
+            </p>
+            <p>
+                <b>Trump administration:</b>
+                <ul>
+                    <li>Withdrew the guidance in 2017 considering it to be too broad. </li>
+                    <li>The National Labor Relations Board concluded in 2019 that Uber drivers should not be considered employees under federal labor law given their freedom in their workplace. </li>
+                    <li>In September 2020, a DOL proposal made it easier to classify workers as independent contractors
+                    In January 2021, the administration finalized a rule under the Fair Labor Standards Act that reflected the proposal. </li>
+                    <br><br>
+                </ul>
+            </p>
+            <p>
+                Two weeks after the finalization, Trump left the office, and four months later the administration
+                of Joe Biden blocked the Trump rule.
+            </p>
         </article>
 
-        <article class="scene fullscreen" data-scene="4">
+        <article class="scene" data-scene="4">
+            <h2>Texas Response to Biden Administration</h2>
+            <p>
+                A U.S. district judge in Texas in March 2022 blocked the Biden administration withdrawal and 
+                ordered the Trump rule to take effect. The Justice Department appealed. <br><br>
+                In June 2022, the DOL said it would develop a proposed rule on determining employee or 
+                independent contractor status. It held forums in June to hear from workers and companies.
+                <a href="https://www.reuters.com/world/us/us-government-back-forth-gig-workers-contractors-2022-10-11/">
+                    (D. Shepardson and N. Bose, Reuter)
+                </a>
+            </p>
+            <img src="img/DOL.jpg"></img>
+        </article>
+
+        <article class="scene fullscreen" data-scene="9">
             <h2>STEP 7: Ending Page</h2>
         </article>
         
@@ -178,26 +206,26 @@
 
                     var index = response.index; // capture the id of the current scene. 
 
-                    if (index === 3) {
+                    if (index === 4) {
 
                         map.flyTo({
-                        center: [-122.4121036, 47.6131229],
-                        zoom: 12,
+                        center: [-99.2525, 31.2412],
+                        zoom: 5.5,
                         pitch: 0,
                         speed: 0.5
 
                         });
                     } else if (index === 2) {
                         map.flyTo({
-                        center: [-121.93, 47.33],
-                        zoom: 7,
+                        center: [-110.0238, 41.1485],
+                        zoom: 3.5,
                         pitch: 0,
                         speed: 0.5
                     
                         });
                     } else if (index === 1) {
                         map.flyTo({
-                        center: [-3.4360, 55.3781],
+                        center: [-11.4968, 54.2698],
                         zoom: 5,
                         pitch: 0,
                         speed: 0.5
