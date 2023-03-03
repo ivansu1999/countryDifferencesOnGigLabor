@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Globle Gig Economy Index</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
+    <style>
+        h2,
+        h3 {
+            margin: 10px;
+            font-size: 18px;
+        }
+
+        h3 {
+            font-size: 16px;
+        }
+
+        p {
+            margin: 10px;
+        }
+
+        /**
+        * Create a position for the map
+        * on the page */
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /**
+        * Set rules for how the map overlays
+        * (information box and legend) will be displayed
+         on the page. */
+        .map-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-style: solid;
+            border-width: 1px;
+            border-color: rgba(0, 0, 0, 0.2);
+            margin-left: 20px;
+            font-family: Arial, sans-serif;
+            overflow: auto;
+            border-radius: 3px;
+        }
+
+        #features {
+            top: 0;
+            height: 100px;
+            margin-top: 20px;
+            width: 250px;
+        }
+
+        #legend {
+            padding: 10px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            line-height: 18px;
+            height: 210px;
+            margin-bottom: 40px;
+            width: 150px;
+        }
+
+        .legend-key {
+            display: inline-block;
+            border-radius: 20%;
+            width: 10px;
+            height: 10px;
+            margin-right: 5px;
+        }
+
+        .mapboxgl-canvas-container.mapboxgl-interactive,
+        .mapboxgl-ctrl-group button.mapboxgl-ctrl-compass {
+            cursor: unset;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div class='map-overlay' id='features'>
+        <h2>Globle Gig Economy Index</h2>
+        <div id='text-description'>
+            <p>Hover over colored countries</p>
+        </div>
+    </div>
+    <div class='map-overlay' id='legend'></div>
+    <script>
+        // initialize basemmap
+        mapboxgl.accessToken =
+            'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            projection:'mercator',
+            style: 'mapbox://styles/mapbox/light-v10', // style URL
+            zoom:1.3, // starting zoom
+            center: [20, 20] // starting center
+        });
+
+        map.on('load', () => { 
+            map.addSource('gigindex', {
+                type: 'geojson',
+                data: 'assets/gigindex.json'
+            });
+
+            map.addLayer({
+                'id': 'gigindex',
+                'type': 'fill',
+                //what does this mean?
+                'source': 'gigindex',
+                'paint': {
+                    'fill-color': [
+                        'step',
+                        ['get','gigindex'],
+                        '#fcfbfd',   // stop_output_0
+                        20,          // stop_input_0
+                        '#efedf5',   // stop_output_1
+                        40,          // stop_input_1
+                        '#dadaeb',   // stop_output_2
+                        50,          // stop_input_2
+                        '#bcbddc',   // stop_output_3
+                        60,         // stop_input_3
+                        '#9e9ac8',   // stop_output_4
+                        70,         // stop_input_4
+                        '#807dba',   // stop_output_5
+                        80,         // stop_input_5
+                        '#6a51a3',   // stop_output_6
+                        90,        // stop_input_6
+                        '#4a1486'   // stop_output_7
+                    ],
+                    'fill-outline-color': '#252525',
+                    'fill-opacity': 0.6,
+                },
+            });
+                const layers = [
+                    '0 - 19%',
+                    '20% - 39%',
+                    '40% - 59%',
+                    '50% - 69%',
+                    '60% - 79%',
+                    '70% - 79%',
+                    '80% - 89%',
+                    '90% and more'
+                ];
+                const colors = [
+                    '#fcfbfd',
+                    '#efedf5',
+                    '#dadaeb',
+                    '#bcbddc',
+                    '#9e9ac8',
+                    '#807dba',
+                    '#6a51a3',
+                    '#4a1486'
+                ];
+
+                // create legend
+                const legend = document.getElementById('legend');
+                legend.innerHTML = "<b>Gig Economy Index<br>(TBD)</b><br><br>";
+
+
+                layers.forEach((layer, i) => {
+                    const color = colors[i];
+                    const item = document.createElement('div');
+                    const key = document.createElement('span');
+                    key.className = 'legend-key';
+                    key.style.backgroundColor = color;
+
+                    const value = document.createElement('span');
+                    value.innerHTML = `${layer}`;
+                    item.appendChild(key);
+                    item.appendChild(value);
+                    legend.appendChild(item);
+                });
+            });
+
+            map.on('mousemove', ({point}) => {
+                const state = map.queryRenderedFeatures(point, {
+                    layers: ['gigindex']
+                });
+                document.getElementById('text-description').innerHTML = state.length ?
+                    `<h3>${state[0].properties.NAME}</h3><p><strong><em>${state[0].properties.gigindex}</strong> TBD </em></p>` :
+                    `<p>Hover over colored countries</p>`;
+            });
+       
+    </script>
+
+</body>
+
+</html>
