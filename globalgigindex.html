@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Globle Gig Economy Index</title>
+    <title>Globle Gig Economy Index 2020</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
@@ -55,7 +55,7 @@
 
         #features {
             top: 0;
-            height: 100px;
+            height: 120px;
             margin-top: 20px;
             width: 250px;
         }
@@ -64,9 +64,9 @@
             padding: 10px;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
             line-height: 18px;
-            height: 210px;
+            height: 220px;
             margin-bottom: 40px;
-            width: 150px;
+            width: 170px;
         }
 
         .legend-key {
@@ -87,7 +87,7 @@
 <body>
     <div id="map"></div>
     <div class='map-overlay' id='features'>
-        <h2>Globle Gig Economy Index</h2>
+        <h2>Globle Gig Economy Index 2020</h2>
         <div id='text-description'>
             <p>Hover over colored countries</p>
         </div>
@@ -163,8 +163,11 @@
 
                 // create legend
                 const legend = document.getElementById('legend');
-                legend.innerHTML = "<b>Gig Economy Index<br>(TBD)</b><br><br>";
-
+                legend.innerHTML = "<b>Gig Economy Index<br><br>";
+                const source =
+                '<p style="text-align: left; font-size:10pt">Source: <a href="https://thegedi.org/wp-content/uploads/2020/12/DPE-2020-Report-Final.pdf">GEDI</a></p>';
+                // combine all the html codes.
+                legend.innerHTML = legend.innerHTML + source;
 
                 layers.forEach((layer, i) => {
                     const color = colors[i];
@@ -186,7 +189,7 @@
                     layers: ['gigindex']
                 });
                 document.getElementById('text-description').innerHTML = state.length ?
-                    `<h3>${state[0].properties.NAME}</h3><p><strong><em>${state[0].properties.gigindex}</strong> TBD </em></p>` :
+                    `<h3>${state[0].properties.NAME}</h3><p><strong><em>${state[0].properties.gigindex}</strong> </em></p>` :
                     `<p>Hover over colored countries</p>`;
             });
        
