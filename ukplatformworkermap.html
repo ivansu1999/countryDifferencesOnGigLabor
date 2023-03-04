@@ -32,7 +32,7 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            background: rgb(204, 118, 97);
+            background: rgb(233, 227, 225);
             border-style: solid;
             border-width: 1px;
             border-color: rgb(72, 12, 5);
@@ -40,26 +40,7 @@
             font-family: 'Times New Roman', serif;
             overflow: auto;
             border-radius:10px;
-        }
-        #title {
-            position: absolute;
-            top: 0;
-            left: 0;
-            margin-top: 20px;
-            margin-left: 20px;
-            font-family: 'Times New Roman', sans-serif;
-            font-size: 25pt;
-            color: black
-        }
-        #subtitle {
-            position: absolute;
-            top: 0;
-            left: 0;
-            margin-top: 70px;
-            margin-left: 190px;
-            font-family: 'Times New Roman', sans-serif;
-            font-size: 15pt;
-            color: black
+            height:150px;
         }
         #features {
             top: 0;
@@ -99,11 +80,11 @@
 
 <body>
     <div id="map"></div>
-    <div id="title">
-        Platform Workers in the UK
-    </div>
-    <div id="subtitle">
-        Click on a region!
+    <div class='map-overlay' id="features">
+        <h2>Platform Workers in the UK</h2>
+        <div id='text-description'>
+            <p>Hover over a region!</p>
+        </div>
     </div>
     <div class='map-overlay' id='legend'></div>
     <script>
@@ -118,7 +99,7 @@
         });
 
         async function geojsonFetch() { 
-            let response = await fetch('assets/ukplatformworkers.geojson');
+            let response = await fetch('assets/updateduk.geojson');
             let worker_data = await response.json();
 
             map.on('load', function loadingData() {
@@ -150,13 +131,6 @@
                         'fill-outline-color': '#BBBBBB',
                         'fill-opacity': 0.7,
                     }
-                });
-
-                map.on('click', 'worker-percents', (event) => {
-                    new mapboxgl.Popup()
-                        .setLngLat(event.features[0].geometry.coordinates[0][0])
-                        .setHTML(`<strong>Percent:</strong> ${event.features[0].properties.percent}`)
-                        .addTo(map);
                 });
             
 
@@ -199,6 +173,15 @@
                 '<p style ="text-align: left; font-size:10pt">Source: <a href="https://feps-europe.eu/wp-content/uploads/downloads/publications/platform%20work%20in%20the%20uk%202016-2019%20v3-converted.pdf">Univ. of Hertfordshire</a></p>';
             
             legend.innerHTML += source;
+
+            map.on('mousemove', ({point}) => {
+                const region = map.queryRenderedFeatures(point, {
+                    layers: ['worker-percents']
+                });
+                document.getElementById('text-description').innerHTML = region.length ?
+                    `<h3>${region[0].properties.nuts118nm}</h3><p><strong><em>${region[0].properties.percent}</strong> percent of the population are platform workers! </em></p>` :
+                    `<p>Hover over a region!</p>`;   
+            });
 
         }
 
