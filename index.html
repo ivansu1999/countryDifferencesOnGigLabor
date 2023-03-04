@@ -75,7 +75,7 @@
         }
 
         #features1 {
-            height: 100px;
+            height: 120px;
             left: 0;
             margin-left: 20px;
             margin-bottom: 20px;
@@ -192,7 +192,7 @@
             <h2>Global Index Map</h2>
 
             <div class='map-overlay1' id='features1'>
-                <h3>Globle Gig Economy Index</h3>
+                <h3>Globle Gig Economy Index 2020</h3>
                 <div id='text-description'>
                     <span >Hover over colored countries</span>
                 </div>
@@ -470,6 +470,10 @@
                             // create legend
                             const legend = document.getElementById('legend1');
                             legend.innerHTML = "<b>Gig Economy Index<br>(TBD)</b><br><br>";
+                            const source =
+                            '<b style="text-align: left; font-size:10pt ;color: white">Source: <a style="text-align: left; font-size:10pt ;color: white"; href="https://thegedi.org/wp-content/uploads/2020/12/DPE-2020-Report-Final.pdf">GEDI</a></b>';
+                            // combine all the html codes.
+                            legend.innerHTML = legend.innerHTML + source;
 
                             layers.forEach((layer, i) => {
                                 const color = colors[i];
@@ -531,6 +535,10 @@
                             // create legend
                             const legend = document.getElementById('legend1');
                             legend.innerHTML = "<b>Gig Economy Index<br>(TBD)</b><br><br>";
+                            const source =
+                            '<p style="color: white">Source: <a href="https://thegedi.org/wp-content/uploads/2020/12/DPE-2020-Report-Final.pdf">GEDI</a></p>';
+                            // combine all the html codes.
+                            legend.innerHTML = legend.innerHTML + source;
 
                             layers.forEach((layer, i) => {
                                 const color = colors[i];
