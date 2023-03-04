@@ -1,18 +1,140 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="description" content="Global Gig Economy and Labor" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-  <title>Global Gig Economy and Labor</title>
-  <!-- <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,500;1,400;1,500&display=swap" /> -->
-  <!-- <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css"> -->
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"> -->
-  <link rel="stylesheet" href="css/main.css">
-  <script src="https://unpkg.com/scrollama"></script>
-  <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
+    <meta charset="utf-8" />
+    <meta name="description" content="Global Gig Economy and Labor" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>Global Gig Economy and Labor</title>
+    <!-- <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,500;1,400;1,500&display=swap" /> -->
+    <!-- <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"> -->
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://unpkg.com/scrollama"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
+    <style>
+        h2,
+        h3 {
+            margin: 10px;
+            font-size: 18px;
+            color: white;
+        }
+
+        h3 {
+            font-size: 16px;
+        }
+
+        p {
+            margin: 10px;
+        }
+        /**
+        * Create a position for the map
+        * on the page */
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /**
+        * Set rules for how the map overlays
+        * (information box and legend) will be displayed
+        on the page. */
+        .map-overlay1 {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-style: solid;
+            border-width: 1px;
+            border-color: rgba(0, 0, 0, 0.2);
+            margin-right: 20px;
+            font-family:  Arial, sans-serif;
+            overflow: auto;
+            border-radius: 3px;
+        }
+
+        .map-overlay2 {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: rgb(233, 227, 225);
+            border-style: solid;
+            border-width: 1px;
+            border-color: rgb(72, 12, 5);
+            margin-left: 20px;
+            font-family: 'Times New Roman', serif;
+            overflow: auto;
+            border-radius:10px;
+            height:150px;
+        }
+
+        #features1 {
+            height: 100px;
+            left: 0;
+            margin-left: 20px;
+            margin-bottom: 20px;
+            width: 250px;
+            background: black;
+            text-align: none;
+        }
+
+        #legend1 {
+            padding: 10px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            line-height: 18px;
+            height: 210px;
+            margin-bottom: 40px;
+            width: 150px;
+            background: black;
+        }
+
+        .legend-key1 {
+            display: inline-block;
+            border-radius: 20%;
+            width: 10px;
+            height: 10px;
+            margin-right: 5px;
+        }
+
+        #features2 {
+            top: 0;
+            height: 100px;
+            margin-top: 20px;
+            width: 250px;
+        }
+        #legend2 {
+            padding: 10px;
+            box-shadow: 0 1px 2px rgba(172, 42, 42, 0.1);
+            line-height: 18px;
+            height: 210px;
+            margin-bottom: 40px;
+            width: 150px;
+            background: #fff
+        }
+
+        .legend-key2 {
+            display: inline-block;
+            border-radius: 20%;
+            width: 10px;
+            height: 10px;
+            margin-right: 5px;
+        }
+
+        a {
+            color: black;
+        }
+
+        .mapboxgl-canvas-container.mapboxgl-interactive,
+        .mapboxgl-ctrl-group button.mapboxgl-ctrl-compass {
+            cursor: unset;
+        }
+    </style>
 </head>
 
 
@@ -60,7 +182,7 @@
         <!-- create the place holder element for map -->
             <div id="map"></div>
         </div>
-
+        
         <article class="scene" data-scene="0">
             <h2>Section: Introduction</h2>
             <p></p>
@@ -68,6 +190,14 @@
 
         <article class="scene" data-scene="1">
             <h2>Global Index Map</h2>
+
+            <div class='map-overlay1' id='features1'>
+                <h3>Globle Gig Economy Index</h3>
+                <div id='text-description'>
+                    <span >Hover over colored countries</span>
+                </div>
+            </div>
+            <div class='map-overlay1' id='legend1'></div>
         </article>
 
         <article class="scene" data-scene="2">
@@ -166,24 +296,24 @@
         // 3. Define Generic window resize listener event
         function adjustStoryboardlSize() {
 
-        const scenes = document.getElementsByClassName("scene");
-        const storyboard = document.getElementById("storyboard");
+            const scenes = document.getElementsByClassName("scene");
+            const storyboard = document.getElementById("storyboard");
 
-        // 3.1 determine the height of each scene element
-        let sceneH = Math.floor(window.innerHeight * 0.75);
-        for (const scene of scenes) {
-            scene.style.height = sceneH + "px";
-        }
-        
-        // 3.2 determin the height of the storyboard.
-        let storyboardHeight = window.innerHeight;
-        let storyboardMarginTop = (window.innerHeight - storyboardHeight) / 2;
+            // 3.1 determine the height of each scene element
+            let sceneH = Math.floor(window.innerHeight * 0.75);
+            for (const scene of scenes) {
+                scene.style.height = sceneH + "px";
+            }
+            
+            // 3.2 determin the height of the storyboard.
+            let storyboardHeight = window.innerHeight;
+            let storyboardMarginTop = (window.innerHeight - storyboardHeight) / 2;
 
-        storyboard.style.height = storyboardHeight + "px";
-        storyboard.style.top = storyboardMarginTop + "px"
+            storyboard.style.height = storyboardHeight + "px";
+            storyboard.style.top = storyboardMarginTop + "px"
 
-        // 3.3 tell scrollama/script panel to update new element dimensions
-        scriptPanel.resize();
+            // 3.3 tell scrollama/script panel to update new element dimensions
+            scriptPanel.resize();
         }
 
         // 4. Initialize the mapbox
@@ -193,19 +323,58 @@
         map = new mapboxgl.Map({
         container: 'map', // container ID
         style: 'mapbox://styles/mapbox/light-v10',
-        zoom: 7, // starting zoom
-        minZoom: 3,
+        zoom: 1.3, // starting zoom
+        minZoom: 1,
         maxZoom: 10,
-        center: [-121.93, 47.33], // starting center
+        center: [20,20], // starting 
         scrollZoom: false,
         boxZoom: false,
         doubleClickZoom: false
+
         });  // Declare the map object
 
+        // 5. define the asynchronous function to load geojson data and then performs the dependent actions.
         async function geojsonFetch() {
+            let response, gigindex;
+                response = await fetch("assets/gigindex.json");
+                gigindex = await response.json();
 
             // 7. Trigger operations inside of the the ()=> {} funciton while loading the map.
-            map.on('load', () => {
+            map.on('load', () => { 
+                map.addSource('gigindex-fill', {
+                    type: 'geojson',
+                    data: 'assets/gigindex.json'
+                }); // reload the map source of 'counties-src'
+
+                gigindexLayer = {
+                    'id': 'gigindex-polygons',
+                    'type': 'fill',
+                    //what does this mean?
+                    'source': 'gigindex-fill',
+                    'paint': {
+                        'fill-color': [
+                            'step',
+                            ['get','gigindex'],
+                            '#fcfbfd',   // stop_output_0
+                            20,          // stop_input_0
+                            '#efedf5',   // stop_output_1
+                            40,          // stop_input_1
+                            '#dadaeb',   // stop_output_2
+                            50,          // stop_input_2
+                            '#bcbddc',   // stop_output_3
+                             60,         // stop_input_3
+                            '#9e9ac8',   // stop_output_4
+                            70,         // stop_input_4
+                            '#807dba',   // stop_output_5
+                            80,         // stop_input_5
+                            '#6a51a3',   // stop_output_6
+                            90,        // stop_input_6
+                            '#4a1486'   // stop_output_7
+                        ],
+                        'fill-outline-color': '#252525',
+                        'fill-opacity': 0.6,
+                    },
+                }
 
                 // 9. Initialize the script panel
                 scriptPanel
@@ -247,33 +416,173 @@
                         speed: 0.5
                     
                         });
+        
                     } else if (index === 0) {
                         map.flyTo({
-                        center: [-121.93, 47.33],
-                        zoom: 7,
+                        center: [20, 20],
+                        zoom: 1.3,
                         pitch: 0,
                         speed: 0.5
                     
                         });
-                    }
-                    
+
+                    } else if (index === 1) {
+                        if (response.direction == 'down') {
+                            map.flyTo({
+                            center: [20, 20],
+                            zoom: 1.3,
+                            pitch: 0,
+                            speed: 0.5
+                        
+                            });
+                        }
+                        if (typeof (map.getSource('gigindex-fill')) == 'undefined') { //if the map source 'counties-src' does not exist
+                            map.addSource('gigindex-fill', {
+                                type: 'geojson',
+                                data: 'assets/gigindex.json'
+                            }); // reload the map source of 'counties-src'
+                        } else {
+                            map.getSource('gigindex-fill').setData(gigindex); // if the map source does not exist, relaod the data counties to the pre-defined map source 'counties-src'.
+
+                         }
+                        if (!map.getLayer("gigindex-polygons")) { // if the map layer 'counties-polygons' does not exit
+                            map.addLayer(gigindexLayer);
+                            const layers = [
+                                '0 - 19%',
+                                '20% - 39%',
+                                '40% - 59%',
+                                '50% - 69%',
+                                '60% - 79%',
+                                '70% - 79%',
+                                '80% - 89%',
+                                '90% and more'
+                            ];
+                            const colors = [
+                                '#fcfbfd',
+                                '#efedf5',
+                                '#dadaeb',
+                                '#bcbddc',
+                                '#9e9ac8',
+                                '#807dba',
+                                '#6a51a3',
+                                '#4a1486'
+                            ];
+                            // create legend
+                            const legend = document.getElementById('legend1');
+                            legend.innerHTML = "<b>Gig Economy Index<br>(TBD)</b><br><br>";
+
+                            layers.forEach((layer, i) => {
+                                const color = colors[i];
+                                const item = document.createElement('div');
+                                const key = document.createElement('span');
+                                key.className = 'legend-key1';
+                                key.style.backgroundColor = color;
+
+                                const value = document.createElement('span');
+                                value.innerHTML = `${layer}`;
+                                item.appendChild(key);
+                                item.appendChild(value);
+                                legend.appendChild(item);
+                            });
+                             
+                        }
+                    } else if (index === 2) {
+                        if (response.direction != 'down') {
+                            map.flyTo({
+                            center: [20, 20],
+                            zoom: 1.3,
+                            pitch: 0,
+                            speed: 0.5
+                        
+                            });
+                        }
+                        
+                        if (typeof (map.getSource('gigindex-fill')) == 'undefined') { //if the map source 'counties-src' does not exist
+                            map.addSource('gigindex-fill', {
+                                type: 'geojson',
+                                data: 'assets/gigindex.json'
+                            }); // reload the map source of 'counties-src'
+                        } else {
+                            map.getSource('gigindex-fill').setData(gigindex); // if the map source does not exist, relaod the data counties to the pre-defined map source 'counties-src'.
+
+                         }
+                        if (!map.getLayer("gigindex-polygons")) { // if the map layer 'counties-polygons' does not exit
+                            map.addLayer(gigindexLayer);
+                            const layers = [
+                                '0 - 19%',
+                                '20% - 39%',
+                                '40% - 59%',
+                                '50% - 69%',
+                                '60% - 79%',
+                                '70% - 79%',
+                                '80% - 89%',
+                                '90% and more'
+                            ];
+                            const colors = [
+                                '#fcfbfd',
+                                '#efedf5',
+                                '#dadaeb',
+                                '#bcbddc',
+                                '#9e9ac8',
+                                '#807dba',
+                                '#6a51a3',
+                                '#4a1486'
+                            ];
+                            // create legend
+                            const legend = document.getElementById('legend1');
+                            legend.innerHTML = "<b>Gig Economy Index<br>(TBD)</b><br><br>";
+
+                            layers.forEach((layer, i) => {
+                                const color = colors[i];
+                                const item = document.createElement('div');
+                                const key = document.createElement('span');
+                                key.className = 'legend-key1';
+                                key.style.backgroundColor = color;
+
+                                const value = document.createElement('span');
+                                value.innerHTML = `${layer}`;
+                                item.appendChild(key);
+                                item.appendChild(value);
+                                legend.appendChild(item);
+                            });
+                        }
+                    }                                     
                 }
 
-                // 11. This function performs when a scene exists the storyboard
+                 // 11. This function performs when a scene exists the storyboard
                 function handleSceneExit(response) {
                     var index = response.index;
 
                     if (index === 0) {
-                    if (response.direction == 'down') { 
-                        document.getElementById("cover").style.visibility = "hidden"; // when you scroll down, the cover page will be hided.
-                    } else {
-                        document.getElementById("cover").style.visibility = "visible"; // when you scroll up, the cover page will be shown.
+                        if (response.direction == 'down') { 
+                            document.getElementById("cover").style.visibility = "hidden"; // when you scroll down, the cover page will be hided.
+                        } else {
+                            document.getElementById("cover").style.visibility = "visible"; // when you scroll up, the cover page will be shown.
+                         }
+                    } else if (index === 2){
+                        if (response.direction == 'down') { 
+                            if (map.getLayer("gigindex-polygons")) {
+                                map.removeLayer('gigindex-polygons');
+                            }
+                        }
+                    } else if (index === 1){
+                        if (response.direction != 'down') { 
+                            if (map.getLayer("gigindex-polygons")) {
+                                map.removeLayer('gigindex-polygons');
+                            }
+                        }
                     }
-                    } 
-                }
+               }
+            }); 
 
-
-            });
+            map.on('mousemove', ({point}) => {
+                const state = map.queryRenderedFeatures(point, {
+                    layers: ['gigindex-polygons']
+                });
+                document.getElementById('text-description').innerHTML = state.length ?
+                    `<h3 style="color: white">${state[0].properties.NAME}</h3><p style="color: white"><strong><em>${state[0].properties.gigindex}</strong> TBD </em></p>` :
+                    `<p style="color: white">Hover over colored countries</p>`;
+            });             
 
         };
 
