@@ -140,7 +140,7 @@ ul {
 
 [data-scene="6"] img {
   display: block;
-  margin: 2rem auto 0 auto;
+  margin: 1rem auto 0 auto;
   width: 80%;
   border: 5px solid white;
 }
@@ -148,7 +148,7 @@ ul {
 [data-scene="8"] img {
   display: block;
   margin: 1rem auto 0 auto;
-  width: 65%;
+  width: 70%;
   border: 5px solid white;
 }
 
