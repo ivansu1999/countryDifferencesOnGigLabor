@@ -42,10 +42,23 @@ h5 {
 
 p {
   line-height: 1.5;
+  padding: 1rem;
 }
 
 ul {
   color: #3e3838;
+}
+
+li {
+  text-shadow: 0 0 6px white;
+}
+
+blockquote {
+  background-color: #3b3b3b50;
+  font-size: 1.5rem;
+  font-weight: 300;
+  font-style: italic;
+  padding: 1rem;
 }
 
 .canvas-center {
@@ -134,6 +147,16 @@ ul {
   text-shadow: 0 0 6px white;
 }
 
+[data-scene="3"] img {
+  display: block;
+  margin: 1rem auto 0 auto;
+  width: 60%;
+}
+
+[data-scene="7"] p {
+  padding: 0;
+}
+
 [data-scene="6"] div {
   font-size: xxx-large;
 }
@@ -142,14 +165,12 @@ ul {
   display: block;
   margin: 1rem auto 0 auto;
   width: 80%;
-  border: 5px solid white;
 }
 
 [data-scene="8"] img {
   display: block;
   margin: 1rem auto 0 auto;
   width: 70%;
-  border: 5px solid white;
 }
 
 [data-scene="9"] {
