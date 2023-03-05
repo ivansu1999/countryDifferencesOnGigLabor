@@ -190,7 +190,6 @@
 
         <article class="scene" data-scene="1">
             <h2>Global Index Map</h2>
-
             <div class='map-overlay1' id='features1'>
                 <h3>Globle Gig Economy Index 2020</h3>
                 <div id='text-description'>
@@ -205,16 +204,53 @@
         </article>
 
         <article class="scene" data-scene="3">
-            <h2>Section: UK</h2>
-            <p></p>
+            <h2>The United Kingdom: Uber vs. Gig Workers</h2>
+            <p>
+                In the UK, a 2021 Supreme Court ruling has created the potential for an overhaul of the current 
+                seemingly exploitative system. The ruling hasn't resulted in any new legislation yet, but it forced 
+                Uber to acknowledge “that its drivers are workers, not independent contractors” <a href="https://www.cnbc.com/2021/02/19/uber-awaits-uk-supreme-court-ruling-on-whether-drivers-are-workers.html">(CNBC)</a>.
+            </p>
+            <img src="img/Uber_UK.PNG"></img>
+            <p>
+                This hard-won ruling concluded a five-year legal battle in which Uber repeatedly appealed the 2016 U.K.
+                employment tribunal decision that called for Uber to reclassify their drivers as workers. 
+                Eventually, Uber made a final appeal to the Supreme Court after losing each previous appeal in 
+                Britain's courts and lost once again, which is a major win for gig workers in the U.K. who are 
+                now hoping for a trickle-down effect across the larger gig economy.
+            </p>
         </article>
 
         <article class="scene" data-scene="4">
-            <h2>Index Map</h2>
+            <h2>Index Map: UK Gig Workers</h2>
+            <p>
+                This map visualizes the geographic distribution of platform workers across the UK as of 2019. 
+                Data regarding platform work is not as regularly updated as it is a growing field, but these 
+                numbers are predicted to rise as the demand for gig work increases. 
+            </p>
+            <p>
+                To view the exact percent of the working age population that currently works in the gig economy by region, 
+                hover over the region of interest!
+            </p>
         </article>
 
         <article class="scene" data-scene="5">
-            <h2>Conclusion</h2>
+            <h2>The Future of Gig System</h2>
+            <p>
+                Uber is not alone in their desire to keep drivers as independent contractors. Most major platform 
+                economy companies have taken advantage of the minimal responsibility that employing independent
+                contractors creates. The question of whether gig work, as a whole, is beneficial or exploitative 
+                still stands, but the unceasing efforts on the part of these major companies to keep the system 
+                as is remains concerning. 
+            </p>
+            <p>
+                The flexible nature of platform work is undoubtedly a draw for most gig workers and that is the
+                seemingly selfless argument Uber utilized throughout the legal battle, but there is no doubt
+                that the final decision isn’t going to easily translate into a needed overhaul of the system. 
+                There is still the matter of cost to the companies that this decision has the potential to inspire.
+            </p>
+            <blockquote cite="https://www.cnbc.com/2021/02/19/uber-awaits-uk-supreme-court-ruling-on-whether-drivers-are-workers.html">
+                "The platforms are going to fight back because it really cuts into their revenue." 
+            </blockquote>
         </article>
 
         <article class="scene" data-scene="6">
@@ -408,7 +444,7 @@
                         speed: 0.5
                     
                         });
-                    } else if (index === 3) {
+                    } else if (index === 3 || index === 5) {
                         map.flyTo({
                         center: [-11.4968, 54.2698],
                         zoom: 5,
