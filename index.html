@@ -63,11 +63,11 @@
             position: absolute;
             bottom: 0;
             right: 0;
-            background: rgb(233, 227, 225);
+            background: black;
             border-style: solid;
             border-width: 1px;
             border-color: rgb(72, 12, 5);
-            margin-left: 20px;
+            margin-right: 20px;
             font-family: 'Times New Roman', serif;
             overflow: auto;
             border-radius:10px;
@@ -103,19 +103,22 @@
         }
 
         #features2 {
-            top: 0;
-            height: 100px;
-            margin-top: 20px;
+            left: 0;
+            margin-left: 20px;
+            margin-bottom: 20px;
             width: 250px;
+            background: black;
+            text-align: none;
         }
         #legend2 {
             padding: 10px;
             box-shadow: 0 1px 2px rgba(172, 42, 42, 0.1);
             line-height: 18px;
             height: 210px;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
+            margin-right: 20px;
             width: 150px;
-            background: #fff
+            background: black;
         }
 
         .legend-key2 {
@@ -231,6 +234,13 @@
                 To view the exact percent of the working age population that currently works in the gig economy by region, 
                 hover over the region of interest!
             </p>
+            <div class='map-overlay2' id="features2">
+                <h3>Platform Workers in the UK</h3>
+                <div id='text-description2'>
+                    <span>Hover over a region!</span>
+                </div>
+            </div>
+            <div class='map-overlay2' id='legend2'></div>
         </article>
 
         <article class="scene" data-scene="5">
@@ -334,6 +344,7 @@
 
             const scenes = document.getElementsByClassName("scene");
             const storyboard = document.getElementById("storyboard");
+            
 
             // 3.1 determine the height of each scene element
             let sceneH = Math.floor(window.innerHeight * 0.75);
@@ -371,16 +382,23 @@
 
         // 5. define the asynchronous function to load geojson data and then performs the dependent actions.
         async function geojsonFetch() {
-            let response, gigindex;
+            let response, gigindex, worker_data;
                 response = await fetch("assets/gigindex.json");
                 gigindex = await response.json();
+                response = await fetch('assets/updateduk.geojson');
+                worker_data = await response.json();
 
             // 7. Trigger operations inside of the the ()=> {} funciton while loading the map.
             map.on('load', () => { 
                 map.addSource('gigindex-fill', {
                     type: 'geojson',
                     data: 'assets/gigindex.json'
-                }); // reload the map source of 'counties-src'
+                }); 
+
+                map.addSource('worker_data', {
+                    type: 'geojson',
+                    data: worker_data
+                });
 
                 gigindexLayer = {
                     'id': 'gigindex-polygons',
@@ -410,6 +428,31 @@
                         'fill-outline-color': '#252525',
                         'fill-opacity': 0.6,
                     },
+                }
+
+                ukindexLayer = {
+                    'id': 'worker-percents',
+                    'type': 'fill',
+                    'source': 'worker_data',
+                    'paint': {
+                        'fill-color': [
+                            'step',
+                            ['get', 'percent'],
+                            '#FFEDA0',   // stop_output_0
+                            5,          // stop_input_0
+                            '#FED976',   // stop_output_1
+                            10,          // stop_input_1
+                            '#FEB24C',   // stop_output_2
+                            15,          // stop_input_2
+                            '#FD8D3C',   // stop_output_3
+                            20,         // stop_input_3
+                            '#FC4E2A'   // stop_output_4
+
+
+                        ],
+                        'fill-outline-color': '#BBBBBB',
+                        'fill-opacity': 0.7,
+                    }
                 }
 
                 // 9. Initialize the script panel
@@ -444,7 +487,7 @@
                         speed: 0.5
                     
                         });
-                    } else if (index === 3 || index === 5) {
+                    } else if (index === 3) {
                         map.flyTo({
                         center: [-11.4968, 54.2698],
                         zoom: 5,
@@ -568,11 +611,10 @@
                                 '#6a51a3',
                                 '#4a1486'
                             ];
-                            // create legend
                             const legend = document.getElementById('legend1');
                             legend.innerHTML = "<b>Gig Economy Index<br>(TBD)</b><br><br>";
                             const source =
-                            '<p style="color: white">Source: <a href="https://thegedi.org/wp-content/uploads/2020/12/DPE-2020-Report-Final.pdf">GEDI</a></p>';
+                            '<b style="text-align: left; font-size:10pt ;color: white">Source: <a style="text-align: left; font-size:10pt ;color: white"; href="https://thegedi.org/wp-content/uploads/2020/12/DPE-2020-Report-Final.pdf">GEDI</a></b>';
                             // combine all the html codes.
                             legend.innerHTML = legend.innerHTML + source;
 
@@ -590,7 +632,125 @@
                                 legend.appendChild(item);
                             });
                         }
-                    }                                     
+                    } else if (index === 4) {
+                        if (response.direction == 'down') {
+                            map.flyTo({
+                            center: [-11.4968, 54.2698],
+                            zoom: 5,
+                            pitch: 0,
+                            speed: 0.5
+                        
+                            });
+                        }
+                        if (typeof (map.getSource('worker_data')) == 'undefined') { //if the map source 'counties-src' does not exist
+                            map.addSource('worker_data', {
+                                type: 'geojson',
+                                data: worker_data
+                            }); // reload the map source of 'counties-src'
+                        } else {
+                            map.getSource('worker_data').setData(worker_data); // if the map source does not exist, relaod the data counties to the pre-defined map source 'counties-src'.
+
+                         }
+                        if (!map.getLayer("worker-percents")) { // if the map layer 'counties-polygons' does not exit
+                            map.addLayer(ukindexLayer);
+                            const layers2 = [
+                                '0-4%',
+                                '5-9%',
+                                '10-14%',
+                                '15-20%',
+                                '20% and more'
+                            ];
+
+                            const colors2 = [
+                                '#FFEDA070',
+                                '#FED97670',
+                                '#FEB24C70',
+                                '#FD8D3C70',
+                                '#FC4E2A70',
+                            ];
+                            
+                            const legend2 = document.getElementById('legend2');
+                            legend2.innerHTML = "<b>Percent of Platform Workers by Region</b>";
+                            const source2 = 
+                                '<p style = "text-align: left; font-size:10pt; color: white">Source: <a style="text-align: left; font-size:10pt ;color: white"; href="https://feps-europe.eu/wp-content/uploads/downloads/publications/platform%20work%20in%20the%20uk%202016-2019%20v3-converted.pdf">Univ. of Hertfordshire</a></p>';
+                            
+                            legend2.innerHTML = legend2.innerHTML + source2;
+
+
+                            layers2.forEach((layer, i) => {
+                                const color2 = colors2[i];
+                                const item2 = document.createElement('div');
+                                const key2 = document.createElement('span');
+                                key2.className = 'legend-key2';
+                                key2.style.backgroundColor = color2;
+
+                                const value2 = document.createElement('span');
+                                value2.innerHTML = `${layer}`;
+                                item2.appendChild(key2);
+                                item2.appendChild(value2);
+                                legend2.appendChild(item2);
+                            });
+                        }
+                    } else if (index === 5) {
+                        if (response.direction != 'down') {
+                            map.flyTo({
+                            center: [-11.4968, 54.2698],
+                            zoom: 5,
+                            pitch: 0,
+                            speed: 0.5
+                        
+                            });
+                        }
+                        if (typeof (map.getSource('worker_data')) == 'undefined') { //if the map source 'counties-src' does not exist
+                            map.addSource('worker_data', {
+                                type: 'geojson',
+                                data: worker_data
+                            }); // reload the map source of 'counties-src'
+                        } else {
+                            map.getSource('worker_data').setData(worker_data); // if the map source does not exist, relaod the data counties to the pre-defined map source 'counties-src'.
+
+                         }
+                        if (!map.getLayer("worker-percents")) { // if the map layer 'counties-polygons' does not exit
+                            map.addLayer(ukindexLayer);
+                            const layers2 = [
+                                '0-4%',
+                                '5-9%',
+                                '10-14%',
+                                '15-20%',
+                                '20% and more'
+                            ];
+
+                            const colors2 = [
+                                '#FFEDA070',
+                                '#FED97670',
+                                '#FEB24C70',
+                                '#FD8D3C70',
+                                '#FC4E2A70',
+                            ];
+                            
+                            const legend2 = document.getElementById('legend2');
+                            legend2.innerHTML = "<b>Percent of Platform Workers by Region</b>";
+                            const source2 = 
+                                '<p style = "text-align: left; font-size:10pt; color: white">Source: <a style="text-align: left; font-size:10pt ;color: white"; href="https://feps-europe.eu/wp-content/uploads/downloads/publications/platform%20work%20in%20the%20uk%202016-2019%20v3-converted.pdf">Univ. of Hertfordshire</a></p>';
+                            
+                            legend2.innerHTML = legend2.innerHTML + source2;
+
+
+                            layers2.forEach((layer, i) => {
+                                const color2 = colors2[i];
+                                const item2 = document.createElement('div');
+                                const key2 = document.createElement('span');
+                                key2.className = 'legend-key2';
+                                key2.style.backgroundColor = color2;
+
+                                const value2 = document.createElement('span');
+                                value2.innerHTML = `${layer}`;
+                                item2.appendChild(key2);
+                                item2.appendChild(value2);
+                                legend2.appendChild(item2);
+                            });
+                        }
+                    }                               
                 }
 
                  // 11. This function performs when a scene exists the storyboard
@@ -615,6 +775,18 @@
                                 map.removeLayer('gigindex-polygons');
                             }
                         }
+                    } else if (index === 5){
+                        if (response.direction == 'down') { 
+                            if (map.getLayer("worker-percents")) {
+                                map.removeLayer('worker-percents');
+                            }
+                        }
+                    } else if (index === 4){
+                        if (response.direction != 'down') { 
+                            if (map.getLayer("worker-percents")) {
+                                map.removeLayer('worker-percents');
+                            }
+                        }
                     }
                }
             }); 
@@ -626,7 +798,17 @@
                 document.getElementById('text-description').innerHTML = state.length ?
                     `<h3 style="color: white">${state[0].properties.NAME}</h3><p style="color: white"><strong><em>${state[0].properties.gigindex}</strong> TBD </em></p>` :
                     `<p style="color: white">Hover over colored countries</p>`;
-            });             
+                
+                const region = map.queryRenderedFeatures(point, {
+                    layers: ['worker-percents']
+                });
+                document.getElementById('text-description2').innerHTML = region.length ?
+                    `<h3 style="color: white">${region[0].properties.nuts118nm}</h3><p style="color: white"><strong><em>${region[0].properties.percent}</strong> percent of the population are platform workers! </em></p>` :
+                    `<p style="color: white">Hover over a region!</p>`;   
+
+            }); 
+            
+            
 
         };
 
