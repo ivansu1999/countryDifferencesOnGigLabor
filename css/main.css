@@ -147,6 +147,12 @@ blockquote {
   text-shadow: 0 0 6px white;
 }
 
+[data-scene="0"] img {
+  display: block;
+  margin: 1rem auto 0 auto;
+  width: 70%;
+}
+
 [data-scene="3"] img {
   display: block;
   margin: 1rem auto 0 auto;
