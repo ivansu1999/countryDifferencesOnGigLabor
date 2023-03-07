@@ -513,6 +513,8 @@
                         speed: 0.5
 
                         });
+
+                        map.setStyle('mapbox://styles/cathyluc/clexv0fep000g01mngs0lmfsf');
                     } else if (index === 6) {
                         map.flyTo({
                         center: [-110.0238, 41.1485],
@@ -821,7 +823,9 @@
                                 map.removeLayer('worker-percents');
                             }
                         }
-                    }
+                    } else if (index === 8) {
+                        map.setStyle('mapbox://styles/mapbox/light-v10');
+                    } 
                }
             }); 
 
