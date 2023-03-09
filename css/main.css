@@ -116,7 +116,7 @@ blockquote {
   height: 20vh;
   color: white;
   background: #fff;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(135, 121, 121, 0.3);
 }
 
 
@@ -150,7 +150,7 @@ blockquote {
 [data-scene="0"] img {
   display: block;
   margin: 1rem auto 0 auto;
-  width: 70%;
+  width: 60%;
 }
 
 [data-scene="3"] img {
