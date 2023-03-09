@@ -9,9 +9,12 @@ The debate on wether or not a gig worker is an independent contractor or a forma
 For example, according to the US Beaureau of Labor Statistics, 14% of gig workers received less than the $7.25 an hour, 62% of gig workers have lost pay due to technical difficulties clocking in or out, and about twice as much of gig workers 32%, compared to W2 sector workers 18% reported it is very difficult to cover expenses and pay bills. (EPI). So much is still to be discovered about the gig worker economy and its workers in the US. The US BLS is in the works to uncover the realities of how gig workers; the statistics they uncovered in these surveys already showcase the grim facts that these workers face, and further supports the incentive to support this proposal. The national debate on what a gig worker should be is a hot topic, and we will be exploring the international debate on this topic as well. 
 
 ### Case Study in the UK
+
+![uk map screenshot](assets/ukmap.png)
   
 ### Case Study in the US
- 
+
+![us map screenshot](assets/texasresponse.png)
 
 ## Data Sources
 
