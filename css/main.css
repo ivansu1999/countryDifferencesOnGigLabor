@@ -180,6 +180,10 @@ blockquote {
   width: 80%;
 }
 
+[data-scene="8"] {
+  background-color: rgba(235, 228, 228, 0.325);
+}
+
 [data-scene="8"] img {
   display: block;
   margin: 1rem auto 0 auto;
