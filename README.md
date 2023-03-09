@@ -1,4 +1,5 @@
-# Country Differences On GigLabor
+# Gig Work Across the World
+[Access our map here!](https://ivansu1999.github.io/countryDifferencesOnGigLabor/index.html)
 
 ## Project Description and Project Goal
 The rapidly growing platform economy has raised significant discussions around labor relations and labor rights that are different from traditional employment. Platform work, namely paid work mediated by online platforms, (Joyce et al. 2019), has posed various challenges to “standard employment relationship” regarding workplace regulation, labor protection, contractual relations of employment, etc. The huge debate mainly revolves around the question of to what extent platform work is beneficial or exploitative to ordinary workers; and further whether or not platform workers should be recognized as formal employees and enjoy basic labor protection, and ultimately, are gig workers “independent contractor” or “formal employees”? To date, a large amount of attention from the public, social media, academia, and the government, has focused on exploring different platforms, such as Uber, which offers us rich information to develop a project to better understand the geography of platform work “conundrum”. Against this background, our project aims to present broad geographical information on the platform economy and to visualize some of the key events that facilitate a general rethinking of labor relations in the platform economy. The target audience would be professionals involved in labor legislation, labor rights activists, governors in labor regulation, the public who care about platform economy, and scholars/researchers who want to have overview ideas on related topics. 
@@ -14,7 +15,16 @@ For example, according to the US Beaureau of Labor Statistics, 14% of gig worker
 
 ## Data Sources
 
+[Global Gig Economy Index](https://thegedi.org/wp-content/uploads/2020/12/DPE-2020-Report-Final.pdf)  
+[CNBC Uber Article](https://www.cnbc.com/2021/02/19/uk-supreme-court-rules-uber-drivers-are-workers-not-contractors.html)  
+[Platform Work in the UK](https://feps-europe.eu/wp-content/uploads/downloads/publications/platform%20work%20in%20the%20uk%202016-2019%20v3-converted.pdf)  
+[Reuters US Gig Work Definition](https://www.reuters.com/world/us/us-government-back-forth-gig-workers-contractors-2022-10-11/)  
+[Seattle Labor Standards](https://www.seattle.gov/laborstandards/ordinances/covid-19-gig-worker-protections-/gig-worker-premium-pay-ordinance)  
+[EU Pay Proposals](https://www.shrm.org/resourcesandtools/hr-topics/global-hr/pages/eu-proposed-protections-gig-workers.aspx)
+
 ## Applied Libraries
+
+- Mapbox GL JS
 
 ## Team Members
 Yuying Xie, Nicole Wentworth, Nikita Yadav, Cathy Chen, Ivan Su
